@@ -1143,6 +1143,140 @@
             flex-wrap: wrap;
         }
 
+        /* ─────────────────────── NEW SECTION : HOW IT WORKS ─────────────────────── */
+        .how-it-works {
+            position: relative;
+            z-index: 1;
+            padding: 90px 24px;
+        }
+        .how-it-works__inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 48px 0 32px;
+        }
+        .flow-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 28px 18px 22px;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .flow-step::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: var(--gradient-cyan-purple);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+        .flow-step.active-step {
+            border-color: var(--cyan);
+            box-shadow: 0 0 28px rgba(0, 210, 255, 0.25);
+            background: radial-gradient(circle at center, rgba(0, 210, 255, 0.08) 0%, var(--bg-card) 80%);
+        }
+        .flow-step.active-step::after {
+            opacity: 1;
+        }
+        .flow-step__icon {
+            width: 48px;
+            height: 48px;
+            color: var(--cyan);
+            transition: transform 0.3s ease;
+        }
+        .flow-step.active-step .flow-step__icon {
+            transform: scale(1.15);
+            color: #fff;
+        }
+        .flow-step__title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+        .flow-step__desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .flow-arrow {
+            display: none; /* hidden on desktop, we use grid with connecting lines? We'll use arrow icons between cards on desktop */
+        }
+        @media (min-width: 769px) {
+            .flow-steps {
+                position: relative;
+            }
+            .flow-step:not(:last-child)::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -22px;
+                width: 20px;
+                height: 20px;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%2300d2ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E");
+                background-size: contain;
+                background-repeat: no-repeat;
+                opacity: 0.5;
+                z-index: 3;
+                pointer-events: none;
+            }
+        }
+        .simulate-btn-wrapper {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .simulate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1.5px solid rgba(0, 210, 255, 0.5);
+            background: rgba(0, 210, 255, 0.05);
+            color: var(--cyan);
+            transition: all var(--transition-fast);
+            font-family: var(--font-sans);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .simulate-btn:hover {
+            background: rgba(0, 210, 255, 0.15);
+            border-color: var(--cyan);
+            box-shadow: 0 0 24px rgba(0, 210, 255, 0.3);
+        }
+        .simulate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .simulate-note {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 12px;
+            text-align: center;
+        }
+
         /* ─────────────────────── RESPONSIVE ─────────────────────── */
         @media (max-width: 1024px) {
             .systems-grid {
@@ -1192,6 +1326,13 @@
             }
             .ecosystem-node__label {
                 font-size: 0.65rem;
+            }
+            .flow-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+            .flow-step:not(:last-child)::before {
+                display: none;
             }
         }
         @media (max-width: 768px) {
@@ -1265,6 +1406,13 @@
             }
             .section {
                 padding: 60px 16px;
+            }
+            .flow-steps {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .flow-step::before {
+                display: none;
             }
         }
         @media (max-width: 480px) {
@@ -1343,6 +1491,7 @@
             <ul class="nav__links" id="navLinks">
                 <li><a href="#systems" data-nav-close>Systems</a></li>
                 <li><a href="#voice" data-nav-close>Voice Engines</a></li>
+                <li><a href="#how-it-works" data-nav-close>How It Works</a></li>
                 <li><a href="#metrics" data-nav-close>Case Studies</a></li>
                 <li><a href="#faq" data-nav-close>FAQ</a></li>
                 <li><a href="#pricing" data-nav-close>Pricing</a></li>
@@ -1594,6 +1743,62 @@
         </div>
     </section>
 
+    <!-- ──────────────────── NEW: HOW IT WORKS ──────────────────── -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="how-it-works__inner">
+            <span class="section__label">Inside the Engine</span>
+            <h2 class="section__title">How Our AI Voice Agents Process Every Call</h2>
+            <p class="section__desc">From the moment a lead dials your number to the instant your CRM updates, our voice pipeline works in real time — with zero human delay. Here's the exact sequence your business runs on.</p>
+            
+            <div class="flow-steps" id="flowSteps">
+                <div class="flow-step" data-step="1">
+                    <svg class="flow-step__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 018.63 18.85a19.5 19.5 0 01-6-6A19.79 19.79 0 01-.45 4.18 2 2 0 012.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                    </svg>
+                    <h4 class="flow-step__title">1. Call Initiated</h4>
+                    <p class="flow-step__desc">Lead dials your published number (or clicks from Google Ad). Our AI instantly picks up — no rings, no wait.</p>
+                </div>
+                <div class="flow-step" data-step="2">
+                    <svg class="flow-step__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+                        <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                    <h4 class="flow-step__title">2. AI Answers & Transcribes</h4>
+                    <p class="flow-step__desc">Speech-to-Text converts the conversation in real time. Natural language understanding extracts intent, name, and query.</p>
+                </div>
+                <div class="flow-step" data-step="3">
+                    <svg class="flow-step__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                    <h4 class="flow-step__title">3. Intent Analysis & Enrichment</h4>
+                    <p class="flow-step__desc">Our engine scores lead quality, appends firmographic data via Clearbit, and decides next action — all within 800ms.</p>
+                </div>
+                <div class="flow-step" data-step="4">
+                    <svg class="flow-step__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                        <path d="M14 15h3"/>
+                        <path d="M14 18h2"/>
+                    </svg>
+                    <h4 class="flow-step__title">4. CRM Sync & Alert</h4>
+                    <p class="flow-step__desc">Lead pushed to your CRM (Salesforce/HubSpot/Zoho). Your sales team gets an instant WhatsApp/Slack alert with a call summary.</p>
+                </div>
+            </div>
+            
+            <div class="simulate-btn-wrapper">
+                <button class="simulate-btn" id="simulateCallBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Simulate a Live Call Flow
+                </button>
+                <p class="simulate-note" id="simulateStatus">Click to watch the pipeline activate step‑by‑step.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ──────────────────── FAQ ──────────────────── -->
     <section class="section" id="faq">
         <div class="section__inner">
@@ -1646,6 +1851,7 @@
         <div class="footer__links">
             <a href="#systems">Systems</a>
             <a href="#voice">Voice Engines</a>
+            <a href="#how-it-works">How It Works</a>
             <a href="#faq">FAQ</a>
             <a href="mailto:hello@technoagents.ai">hello@technoagents.ai</a>
         </div>
@@ -1709,23 +1915,18 @@
             const ecoNodes = document.querySelectorAll('.ecosystem-node--outer');
             ecoNodes.forEach(node => {
                 node.addEventListener('click', function() {
-                    // Remove active from all outer nodes
                     ecoNodes.forEach(n => n.classList.remove('active'));
-                    // Add active to clicked
                     this.classList.add('active');
-                    // Auto-remove after 2.5 seconds
                     setTimeout(() => {
                         this.classList.remove('active');
                     }, 2500);
                 });
             });
 
-            // Center node click
             const centerNode = document.querySelector('.ecosystem-node--center');
             if (centerNode) {
                 centerNode.addEventListener('click', function() {
                     ecoNodes.forEach(n => n.classList.remove('active'));
-                    // Briefly pulse center
                     this.style.transform = 'translate(-50%, -50%) scale(1.12)';
                     this.style.boxShadow =
                         '0 0 65px rgba(124,58,237,0.6), 0 0 110px rgba(0,210,255,0.4)';
@@ -1746,11 +1947,9 @@
                     if (!dropdown) return;
                     const isOpen = dropdown.classList.contains('open');
 
-                    // Close all other dropdowns first
                     document.querySelectorAll('.system-card__dropdown.open').forEach(d => {
                         d.classList.remove('open');
                     });
-                    // Reset all button arrows
                     document.querySelectorAll('.system-card__reveal-btn').forEach(b => {
                         const svg = b.querySelector('svg');
                         if (svg) svg.style.transform = 'rotate(0deg)';
@@ -1764,7 +1963,6 @@
                 });
             });
 
-            // Close dropdowns on outside click
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.system-card__reveal-btn') && !e.target.closest(
                         '.system-card__dropdown')) {
@@ -1812,7 +2010,6 @@
 
             function triggerEqualizer() {
                 equalizer.classList.add('animating');
-                // Randomize bar heights briefly
                 const bars = equalizer.querySelectorAll('.equalizer__bar');
                 bars.forEach(bar => {
                     bar.style.height = (Math.random() * 38 + 8) + 'px';
@@ -1831,17 +2028,14 @@
                     const data = langData[lang];
                     if (!data) return;
 
-                    // Update active button
                     langBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
 
-                    // Update stats with a subtle animation
                     if (statLatency) statLatency.textContent = data.latency;
                     if (statAccent) statAccent.textContent = data.accent;
                     if (statPipeline) statPipeline.textContent = data.pipeline;
                     if (langNote) langNote.innerHTML = data.note;
 
-                    // Highlight relevant stat
                     voiceStats.forEach((stat, i) => {
                         stat.classList.remove('highlight');
                         if (i === data.highlightIndex) {
@@ -1849,10 +2043,8 @@
                         }
                     });
 
-                    // Trigger equalizer animation
                     triggerEqualizer();
 
-                    // Pulse the radar
                     const radar = document.getElementById('voiceRadar');
                     if (radar) {
                         radar.style.boxShadow = '0 0 50px rgba(0,210,255,0.3)';
@@ -1863,17 +2055,53 @@
                 });
             });
 
+            // ── NEW: Simulate Call Flow ──
+            const simulateBtn = document.getElementById('simulateCallBtn');
+            const flowSteps = document.querySelectorAll('.flow-step');
+            const simulateStatus = document.getElementById('simulateStatus');
+            let simulationActive = false;
+
+            function clearActiveSteps() {
+                flowSteps.forEach(step => step.classList.remove('active-step'));
+            }
+
+            async function runSimulation() {
+                if (simulationActive) return;
+                simulationActive = true;
+                simulateBtn.disabled = true;
+                simulateStatus.textContent = 'Simulation running...';
+
+                clearActiveSteps();
+
+                for (let i = 0; i < flowSteps.length; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 900));
+                    flowSteps[i].classList.add('active-step');
+                    simulateStatus.textContent = `Step ${i+1} of ${flowSteps.length}: ${flowSteps[i].querySelector('.flow-step__title').textContent}`;
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 1200));
+                simulateStatus.textContent = 'Simulation complete — lead is now in your CRM.';
+                simulateBtn.disabled = false;
+                simulationActive = false;
+
+                // Keep steps highlighted for a moment then clear
+                setTimeout(() => {
+                    clearActiveSteps();
+                    simulateStatus.textContent = 'Click to watch the pipeline activate step‑by‑step.';
+                }, 3000);
+            }
+
+            simulateBtn.addEventListener('click', runSimulation);
+
             // ── FAQ Accordion ──
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const questionBtn = item.querySelector('.faq-item__question');
                 questionBtn.addEventListener('click', function() {
                     const isOpen = item.classList.contains('open');
-                    // Close all others
                     faqItems.forEach(other => {
                         if (other !== item) other.classList.remove('open');
                     });
-                    // Toggle current
                     if (isOpen) {
                         item.classList.remove('open');
                     } else {
